@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS scores;
 DROP TABLE IF EXISTS subtopics;
 DROP TABLE IF EXISTS topics;
 DROP TABLE IF EXISTS subjects;
+DROP TABLE IF EXISTS teachers;
 DROP TABLE IF EXISTS students;
 
 SET FOREIGN_KEY_CHECKS = 1;
@@ -27,6 +28,16 @@ CREATE TABLE students (
     password_hash VARCHAR(255) NOT NULL,
     department VARCHAR(100),
     semester INT CHECK (semester BETWEEN 1 AND 8),
+    teacher_email VARCHAR(150),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE teachers (
+    teacher_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    department VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
