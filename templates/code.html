@@ -1470,7 +1470,7 @@ async function startQuiz() {
     });
     
     const data = await res.json();
-    if (!res.ok || data.status !== 'success') throw new Error(data.error || 'Failed to generate quiz');
+    if (!res.ok) throw new Error(data.error || data.message || 'Failed to generate quiz');
 
     currentQuiz = data.quiz;
     quizIdx = 0;
@@ -1483,7 +1483,7 @@ async function startQuiz() {
     
     renderQuizQuestion();
   } catch (err) {
-    toast(err.message, 'error');
+    toast(`Quiz Error: ${err.message}`, 'error');
   } finally {
     btn.disabled = false;
     btn.textContent = 'Generate & Start Quiz';
@@ -1596,7 +1596,7 @@ async function generateFlashcards() {
       body: JSON.stringify({ topic })
     });
     const data = await res.json();
-    if (!res.ok || data.status !== 'success') throw new Error(data.error || 'Failed to generate flashcards');
+    if (!res.ok || data.status !== 'success') throw new Error(data.error || data.message || 'Failed to generate flashcards');
 
     currentFlashcards = data.flashcards;
     fcIdx = 0;
@@ -1608,7 +1608,7 @@ async function generateFlashcards() {
     
     renderFlashcard();
   } catch (err) {
-    toast(err.message, 'error');
+    toast(`Flashcard Error: ${err.message}`, 'error');
     document.getElementById('fc-setup').style.display = 'block';
   } finally {
     document.getElementById('fc-loading').style.display = 'none';

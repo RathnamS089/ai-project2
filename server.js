@@ -599,11 +599,11 @@ app.post("/api/generate-quiz", async (req, res) => {
     if (quiz) {
       return res.json({ status: "success", quiz });
     } else {
-      return res.status(500).json({ error: "Failed to generate quiz from Groq" });
+      return res.status(500).json({ error: "Groq failed to generate a quiz. Verify your GROQ_API_KEY in Vercel settings." });
     }
   } catch (e) {
     console.error(`Quiz Route Error: ${e.message}`);
-    return res.status(500).json({ error: "Internal server error during quiz generation" });
+    return res.status(500).json({ error: `Server Error: ${e.message}` });
   }
 });
 
