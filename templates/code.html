@@ -826,10 +826,8 @@ input:focus { border-bottom-color: var(--text); }
 
 <script>
 // ── API Config ────────────────────────────────────────────────────────────────
-// Use relative URLs so frontend auto-matches the Flask server's host/port
-// Use local origin if server is running, otherwise fallback to localhost:8000
-// Use localhost:8000 if not running on port 8000 (handles file:// and Live Server port 5500)
-const API_BASE = (window.location.port !== '8000' && !window.location.hostname.includes('railway.app')) ? 'http://localhost:8000' : '';
+// Use relative URLs so frontend auto-matches the server's host/port
+const API_BASE = '';
 let chatHistory = [];
 let uploadedFiles = []; // Store {name, type, fileObj, blobUrl, base64}
 let activeFileIndex = -1;
