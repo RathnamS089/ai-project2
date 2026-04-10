@@ -1463,10 +1463,12 @@ async function startQuiz() {
       }
     }
 
+    const count = parseInt(document.getElementById('quiz-count').value, 10) || 5;
+
     const res = await fetch(`${API_BASE}/api/generate-quiz`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ topic, files: filesData, count: 5 })
+      body: JSON.stringify({ topic, files: filesData, count })
     });
     
     const data = await res.json();
@@ -1876,7 +1878,7 @@ window.addEventListener('load', () => {
     if (typeof google === 'undefined') return;
     
     google.accounts.id.initialize({
-      client_id: "66198409645-et081tedgqpqgpdorlicvauuhcf089o2.apps.googleusercontent.com",
+      client_id: "66198409645-et081tedgqpqgpdorlicvauuhcf089o2.apps.googleusercontent.com", // This should match your GOOGLE_CLIENT_ID environment variable
       callback: handleCredentialResponse
     });
     

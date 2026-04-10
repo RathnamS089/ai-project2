@@ -23,7 +23,7 @@ const { getGeminiResponse, generateQuizFromFiles } = require("./geminiService");
 const { OAuth2Client } = require("google-auth-library");
 
 const app = express();
-const googleClient = new OAuth2Client("66198409645-et081tedgqpqgpdorlicvauuhcf089o2.apps.googleusercontent.com");
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID || "66198409645-et081tedgqpqgpdorlicvauuhcf089o2.apps.googleusercontent.com");
 
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors());
@@ -135,7 +135,7 @@ app.post("/api/auth/google", async (req, res) => {
   try {
     const ticket = await googleClient.verifyIdToken({
       idToken: token,
-      audience: "66198409645-et081tedgqpqgpdorlicvauuhcf089o2.apps.googleusercontent.com",
+      audience: process.env.GOOGLE_CLIENT_ID || "66198409645-et081tedgqpqgpdorlicvauuhcf089o2.apps.googleusercontent.com",
     });
     const payload = ticket.getPayload();
     const email = payload.email.trim();
@@ -570,7 +570,8 @@ app.get("/api/recommendations/:student_id", async (req, res) => {
 
 // ── GENERATE QUIZ ────────────────────────────────────────────────────────────
 app.post("/api/generate-quiz", async (req, res) => {
-  const { topic = "", files = [], count = 5 } = req.body;
+  const { topic = "", files = [] } = req.body;
+  const count = parseInt(req.body.count, 10) || 5;
 
   let sourceText = topic;
 
